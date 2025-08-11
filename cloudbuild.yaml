@@ -1,0 +1,19 @@
+steps:
+  # Remove existing files from the bucket (optional)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gsutil -m rm -r gs://YOUR_BUCKET_NAME/** || true
+
+  # Upload all repo files to bucket
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - gsutil
+      - -m
+      - cp
+      - -r
+      - .
+      - gs://dual-axis-illusion
+      
