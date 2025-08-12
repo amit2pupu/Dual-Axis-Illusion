@@ -1,4 +1,5 @@
 steps:
+
   # Remove existing files from the bucket (optional)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
