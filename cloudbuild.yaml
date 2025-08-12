@@ -1,19 +1,16 @@
-options:
-  logging: CLOUD_LOGGING_ONLY
-
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: bash
-    args:
-      - -c
-      - |
-        gsutil -m rm -r gs://YOUR_BUCKET_NAME/** || true
+  # Build or prepare your site if needed (optional)
+  # For example, if you have HTML/JS/CSS ready in the repo root, skip to the deploy step.
 
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/cloud-builders/gsutil'
     args:
-      - gsutil
-      - -m
-      - cp
-      - -r
-      - .
-      - gs://dual-axis-illusion
+      [
+        '-m', 'rsync', '-r', '-c',
+        '.',  # Source directory (current repo contents)
+        'gs://${_BUCKET_NAME}'
+      ]
+
+substitutions:
+  _BUCKET_NAME: dual-axis-illusion
+
+timeout: 600s
